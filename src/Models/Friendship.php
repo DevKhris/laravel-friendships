@@ -22,7 +22,7 @@ class Friendship extends Model
      */
     public function __construct(array $attributes = array())
     {
-        $this->table = config('friendships.tables.fr_pivot');
+        $this->table = \config('friendships.tables.fr_pivot');
 
         parent::__construct($attributes);
     }
@@ -46,7 +46,8 @@ class Friendship extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
-    public function groups() {
+    public function groups()
+    {
         return $this->hasMany(FriendFriendshipGroups::class, 'friendship_id');
     }
 
@@ -110,11 +111,9 @@ class Friendship extends Model
                     })
                     ->orWhere($groupsPivotTable . '.friend_type', '!=', $model->getMorphClass());
             });
-
         }
 
         return $query;
-
     }
 
     /**
@@ -125,7 +124,7 @@ class Friendship extends Model
      */
     public function scopeBetweenModels($query, $sender, $recipient)
     {
-        $query->where(function ($queryIn) use ($sender, $recipient){
+        $query->where(function ($queryIn) use ($sender, $recipient) {
             $queryIn->where(function ($q) use ($sender, $recipient) {
                 $q->whereSender($sender)->whereRecipient($recipient);
             })->orWhere(function ($q) use ($sender, $recipient) {

@@ -27,9 +27,8 @@ class FriendFriendshipGroups extends Model
      */
     public function __construct(array $attributes = array())
     {
-        $this->table = config('friendships.tables.fr_groups_pivot');
+        $this->table = \config('friendships.tables.fr_groups_pivot');
 
         parent::__construct($attributes);
     }
-
 }
