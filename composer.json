@@ -1,6 +1,6 @@
 {
-  "name": "hootlex/laravel-friendships",
-  "description": "This package gives Eloquent models the ability to manage their friendships.",
+  "name": "devjhris/laravel-friendships",
+  "description": "This package gives Eloquent models the ability to manage friendship relations, this package is a fork from hootlex/laravel-friendships.",
   "keywords": [
     "laravel",
     "friendships",
