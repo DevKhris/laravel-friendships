@@ -1,23 +1,23 @@
 <?php
 
-namespace Hootlex\Friendships\Traits;
+namespace DevKhris\Friendships\Traits;
 
-use Hootlex\Friendships\Models\Friendship;
-use Hootlex\Friendships\Models\FriendFriendshipGroups;
-use Hootlex\Friendships\Status;
+use DevKhris\Friendships\Models\Friendship;
+use DevKhris\Friendships\Models\FriendFriendshipGroups;
+use DevKhris\Friendships\Status;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Event;
 
 /**
  * Class Friendable
- * @package Hootlex\Friendships\Traits
+ * @package DevKhris\Friendships\Traits
  */
 trait Friendable
 {
     /**
      * @param Model $recipient
      *
-     * @return \Hootlex\Friendships\Models\Friendship|false
+     * @return \DevKhris\Friendships\Models\Friendship|false
      */
     public function befriend(Model $recipient)
     {
@@ -172,7 +172,7 @@ trait Friendable
     /**
      * @param Model $recipient
      *
-     * @return \Hootlex\Friendships\Models\Friendship
+     * @return \DevKhris\Friendships\Models\Friendship
      */
     public function blockFriend(Model $recipient)
     {
@@ -210,7 +210,7 @@ trait Friendable
     /**
      * @param Model $recipient
      *
-     * @return \Hootlex\Friendships\Models\Friendship
+     * @return \DevKhris\Friendships\Models\Friendship
      */
     public function getFriendship(Model $recipient)
     {
@@ -237,6 +237,31 @@ trait Friendable
     public function getPendingFriendships($groupSlug = '')
     {
         return $this->findFriendships(Status::PENDING, $groupSlug)->get();
+    }
+
+
+    /**
+     * @return $details Collection with the users details 
+     * 
+     * @param string $groupSlug
+     * @param int $paginate 
+     * 
+     */
+    public function getPendingFriendshipsDetails($groupSlug = '', int $paginate = 0)
+    {
+        $pendingRequests = $this->getFriendRequests($groupSlug);
+        if ($detailsBatch = $pendingRequests->pluck('sender_id')->cursor()) {
+            foreach ($detailsBatch as $detailBatch) {
+                $pendingDetails[] = $paginate > 0 ? $this->where('id', $detailBatch)
+                    ->paginate($paginate)->first()
+                : $this->where('id', $detailBatch)
+                    ->first();
+
+                $details = collect($pendingDetails);
+            }
+            return $details;
+        }
+        return [];
     }
 
     /**

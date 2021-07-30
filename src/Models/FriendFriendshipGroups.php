@@ -1,13 +1,13 @@
 <?php
 
-namespace Hootlex\Friendships\Models;
+namespace DevKhris\Friendships\Models;
 
-use Hootlex\Friendships\Status;
+use DevKhris\Friendships\Status;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class FriendFriendshipGroups
- * @package Hootlex\Friendships\Models
+ * @package DevKhris\Friendships\Models
  */
 class FriendFriendshipGroups extends Model
 {

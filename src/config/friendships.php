@@ -10,9 +10,10 @@ return [
     ],
 
     'groups' => [
-        'acquaintances' => 0,
-        'close_friends' => 1,
-        'family' => 2
+        'knows' => 0,
+        'partners' => 1,
+        'friends' => 2,
+        'family' => 3,
     ]
 
 ];
